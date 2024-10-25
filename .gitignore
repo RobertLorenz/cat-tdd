@@ -1,0 +1,33 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Test coverage reports
+coverage/
+*.lcov
+
+# Environment variable files
+.env
+.env.local
+
+# Log files
+logs/
+*.log
+
+# IDE and editor specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Miscellaneous
+*.tgz
+*.swp
+*.swo
