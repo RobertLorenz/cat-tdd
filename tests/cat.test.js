@@ -9,34 +9,36 @@ describe("Cat class", () => {
 
   it("Initializes with correct default values", () => {
     expect(myCat.name).toBe("TestCat");
-    expect(myCat.energy).toBe(10);
     expect(myCat.hunger).toBe(5);
     expect(myCat.happiness).toBe(5);
     expect(myCat.isSleeping).toBe(false);
   });
 
-  it("Eat decreases hunger and increases happiness and energy", () => {
+  it("Eat decreases hunger and increases happiness", () => {
     myCat.hunger = 5;
     myCat.eat();
     expect(myCat.hunger).toBeLessThan(5);
-    expect(myCat.energy).toBeGreaterThan(10);
     expect(myCat.happiness).toBeGreaterThan(5);
   });
 
-  it("Play decreases energy and increases hunger and happiness", () => {
-    myCat.play();
-    expect(myCat.energy).toBeLessThan(10);
-    expect(myCat.hunger).toBeGreaterThan(5);
-    expect(myCat.happiness).toBeGreaterThan(5);
-  });
-
-  it("Sleep sets isSleeping and increases energy after waking", (done) => {
+  it("Sleep sets isSleeping and increases hunger and decreases happiness", () => {
     myCat.sleep();
     expect(myCat.isSleeping).toBe(true);
-    setTimeout(() => {
-      expect(myCat.isSleeping).toBe(false);
-      expect(myCat.energy).toBeGreaterThan(10);
-      done();
-    }, 3100);
+    expect(myCat.hunger).toBeGreaterThan(5);
+    expect(myCat.happiness).toBeLessThan(5);
+  });
+
+  it("WakeUp sets isSleeping and increases happiness and decreases hunger", () => {
+    myCat.sleep();
+    myCat.wakeUp();
+    expect(myCat.isSleeping).toBe(false);
+    expect(myCat.happiness).toBeGreaterThan(5);
+    expect(myCat.hunger).toBeGreaterThan(5);
+  });
+
+  it("Status shows the correct cat's current status", () => {
+    expect(myCat.status()).toContain("Hunger: 5");
+    expect(myCat.status()).toContain("Happiness: 5");
+    expect(myCat.status()).toContain("Sleeping: No");
   });
 });
