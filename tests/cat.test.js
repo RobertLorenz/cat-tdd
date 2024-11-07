@@ -1,42 +1,96 @@
 const Cat = require("../src/cat");
 
-describe("Cat class", () => {
-  let myCat;
+describe("Cat test", () => {
+  // 1
 
-  beforeEach(() => {
-    myCat = new Cat("TestCat");
-  });
+  it("Cat sleeps", () => {
+    let myCat = new Cat("Garfield", false, "", 0);
+    let targetCat = new Cat("Garfield", true, "", 2);
 
-  it("Initializes with correct default values", () => {
-    expect(myCat.name).toBe("TestCat");
-    expect(myCat.energy).toBe(10);
-    expect(myCat.hunger).toBe(5);
-    expect(myCat.happiness).toBe(5);
-    expect(myCat.isSleeping).toBe(false);
-  });
-
-  it("Eat decreases hunger and increases happiness and energy", () => {
-    myCat.hunger = 5;
-    myCat.eat();
-    expect(myCat.hunger).toBeLessThan(5);
-    expect(myCat.energy).toBeGreaterThan(10);
-    expect(myCat.happiness).toBeGreaterThan(5);
-  });
-
-  it("Play decreases energy and increases hunger and happiness", () => {
-    myCat.play();
-    expect(myCat.energy).toBeLessThan(10);
-    expect(myCat.hunger).toBeGreaterThan(5);
-    expect(myCat.happiness).toBeGreaterThan(5);
-  });
-
-  it("Sleep sets isSleeping and increases energy after waking", (done) => {
     myCat.sleep();
-    expect(myCat.isSleeping).toBe(true);
-    setTimeout(() => {
-      expect(myCat.isSleeping).toBe(false);
-      expect(myCat.energy).toBeGreaterThan(10);
-      done();
-    }, 3100);
+    expect(myCat).toEqual(targetCat);
+  });
+
+  //2
+
+  it("Cat wakes up", () => {
+    let myCat = new Cat("Garfield", true, "", 2);
+    let targetCat = new Cat("Garfield", false, "", 1);
+
+    myCat.wakeUp();
+    expect(myCat).toEqual(targetCat);
+  });
+
+  // 3
+
+  it("The cat is sleeping, but we put it to sleep again", () => {
+    let myCat = new Cat("Garfield", true, "", 2);
+    let targetCat = new Cat("Garfield", true, "Can not be put to sleep..", 2);
+
+    myCat.sleep();
+    expect(myCat).toEqual(targetCat);
+  });
+
+  // 4
+
+  it("The cat from the sleeperror state, is put to sleep yet again", () => {
+    let myCat = new Cat("Garfield", true, "Can not be put to sleep..", 0);
+    let targetCat = new Cat("Garfield", true, "Can not be put to sleep..", 0);
+
+    myCat.sleep();
+
+    expect(myCat).toEqual(targetCat);
+  });
+
+  // 5
+
+  it("Waking up a cat from sleeperror state", () => {
+    let myCat = new Cat("Garfield", true, "Can not be put to sleep..", 2);
+    let targetCat = new Cat("Garfield", false, "", 1);
+    myCat.wakeUp();
+
+    expect(myCat).toEqual(targetCat);
+  });
+
+  // 6
+
+  it("Wake up an already awakened cat", () => {
+    let myCat = new Cat("Garfield", false, "", 2);
+    let targetCat = new Cat(
+      "Garfield",
+      false,
+      "The cat can not be woken up..",
+      2
+    );
+    myCat.wakeUp();
+
+    expect(myCat).toEqual(targetCat);
+  });
+
+  // 7
+
+  it("Wake up a wakeuperror state cat", () => {
+    let myCat = new Cat("Garfield", false, "The cat can not be woken up..", 2);
+    let targetCat = new Cat(
+      "Garfield",
+      false,
+      "The cat can not be woken up..",
+      2
+    );
+
+    myCat.wakeUp();
+
+    expect(myCat).toEqual(targetCat);
+  });
+
+  // 8
+
+  it("Put to sleep a wakeuperror state cat", () => {
+    let myCat = new Cat("Garfield", false, "The cat can not be woken up..", 1);
+    let targetCat = new Cat("Garfield", true, "", 3);
+
+    myCat.sleep();
+
+    expect(myCat).toEqual(targetCat);
   });
 });
